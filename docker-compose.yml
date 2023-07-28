@@ -1,0 +1,59 @@
+version: '3.1'
+
+services:
+    redis:
+        image: 'redis:alpine'
+        networks:
+          - bitrix
+
+    mysql:
+        image: 'mysql:8.0'
+        volumes:
+            - database:/var/lib/mysql
+            - ./logs/mysql:/var/log/mysql
+            - ./dump:/var/dump
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=bitrix-test
+            - MYSQL_USER=bitrix-test
+            - MYSQL_PASSWORD=bitrix-test
+        ports:
+            - '3306:3306'
+        networks:
+          - bitrix
+
+    nginx:
+        image: 'nginx:alpine'
+        volumes:
+            - ./src:/var/www/bitrix-test
+            - ./dump:/var/dump
+            - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+        ports:
+          - "80:80"
+          - "443:443"
+        depends_on:
+          - php-fpm
+        networks:
+          - bitrix
+
+    php-fpm:
+        build: phpdocker/php-fpm
+        volumes:
+            - ./src:/var/www/bitrix-test
+            - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini
+        links:
+            - mysql
+            - redis
+        networks:
+          - bitrix
+
+networks:
+  bitrix:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.100.0.0/24
+
+volumes:
+  database:
