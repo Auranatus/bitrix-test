@@ -20,21 +20,6 @@
 	<div id="header_text">
         <div class="bx-main-title">Bitrix-test</div>
 	</div>
-	<div id="menu">
-	<?$APPLICATION->IncludeComponent(
-		"bitrix:menu", 
-		"tabs", 
-		Array(
-			"ROOT_MENU_TYPE"	=>	"top",
-			"MAX_LEVEL"	=>	"1",
-			"USE_EXT"	=>	"N",
-			"MENU_CACHE_TYPE" => "A",
-			"MENU_CACHE_TIME" => "3600",
-			"MENU_CACHE_USE_GROUPS" => "N",
-			"MENU_CACHE_GET_VARS" => Array()
-		)
-	);?>
-	</div>
 </div>
 
 <table id="content" cellpadding="0" cellspacing="0">

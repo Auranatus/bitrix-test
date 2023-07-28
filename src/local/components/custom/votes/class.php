@@ -60,7 +60,8 @@ class VotesComponent extends CBitrixComponent
     
             $vote = $this->entityClass::getRow([
                 'filter' => [
-                    '=UF_IP_ADDRESS' => $currentIp
+                    '=UF_IP_ADDRESS' => $currentIp,
+                    '=UF_POST' => $this->request->get('post_id'),
                 ]
             ]);
             if (!empty($vote)) {
