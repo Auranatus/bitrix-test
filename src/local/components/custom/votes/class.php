@@ -57,6 +57,10 @@ class VotesComponent extends CBitrixComponent
             if (empty($currentIp)) {
                 die(json_encode(['success' => false, 'message' => 'Не удалось определить IP-адрес']));
             }
+
+            if (!$this->checkPost()) {
+                die(json_encode(['success' => false, 'message' => 'Пост не найден']));
+            }
     
             $vote = $this->entityClass::getRow([
                 'filter' => [
@@ -97,5 +101,18 @@ class VotesComponent extends CBitrixComponent
         }
 
         return $ip;
+    }
+
+    public function checkPost()
+    {
+        $hlBlock = \Bitrix\Highloadblock\HighloadBlockTable::getById(POSTS_HL_BLOCK_ID)->fetch();
+        $entity = \Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hlBlock);
+        $entityClass = $entity->getDataClass();
+
+        $post = $entityClass::getRow([
+            'filter' => ['=ID' => $this->request->get('post_id')]
+        ]);
+
+        return !empty($post);
     }
 }

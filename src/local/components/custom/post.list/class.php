@@ -15,8 +15,8 @@ class PostListComponent extends CBitrixComponent
         $cache = \Bitrix\Main\Data\Cache::createInstance();
 
         $nav = new \Bitrix\Main\UI\PageNavigation('posts');
-        $nav->allowAllRecords(true)
-            ->setPageSize(3)
+        $nav->allowAllRecords(false)
+            ->setPageSize($this->arParams['ELEMENTS_COUNT'])
             ->initFromUri();
 
         if ($cache->initCache(86400, 'post_list_page_' . $nav->getCurrentPage() ?? 1)) {

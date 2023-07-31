@@ -4,6 +4,12 @@ $APPLICATION->SetPageProperty("title", "Демонстрационная вер�
 $APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
 $APPLICATION->SetTitle("Список постов");
 
-$APPLICATION->IncludeComponent('custom:post.list', '.default');
+$APPLICATION->IncludeComponent(
+    'custom:post.list',
+    '.default',
+    [
+        'ELEMENTS_COUNT' => 3
+    ]
+);
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");

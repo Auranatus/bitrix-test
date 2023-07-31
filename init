@@ -1,1 +1,1 @@
-sh -c "sudo tar -C src/ -xvzf dump/bitrix.tar.gz" && docker-compose exec mysql sh -c "mysql -uroot -proot bitrix-test < /var/dump/db-dump.sql"
+sh -c "sudo tar -C src/ -xvzf dump/bitrix.tar.gz" && sh -c "sudo cp -f bx_settings/.settings.php src/bitrix/.settings.php" && docker-compose exec mysql sh -c "mysql -uroot -proot bitrix-test < /var/dump/db-dump.sql"
