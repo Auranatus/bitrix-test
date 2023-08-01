@@ -26,7 +26,7 @@ docker-compose up -d
 docker-compose down
 ```
 
-<br>
+### Адрес сайта: localhost
 
 ### Доступы к административной части
 Логин: admin  
